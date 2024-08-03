@@ -16,6 +16,13 @@ public class Vonal {
     private Szinek szin;
     private Stilusok stilus;
 
+    //Színkódok
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+
 //konstruktorok    
     public Vonal(int hossz) {
         this(hossz, 0, Szinek.PIROS, Stilusok.SZIMPLA);
@@ -63,6 +70,22 @@ public class Vonal {
         this.stilus = stilus;
     }
 
+    //Getter Színhez
+    private String getSzinKod() {
+        switch (szin) {
+            case PIROS:
+                return ANSI_RED;
+            case KEK:
+                return ANSI_BLUE;
+            case ZOLD:
+                return ANSI_GREEN;
+            case FEKETE:
+                return ANSI_BLACK;
+            default:
+                return ANSI_RESET;
+        }
+    }
+
 //metódusok
     @Override
     public String toString() {
@@ -71,19 +94,19 @@ public class Vonal {
 
     public String rajz() {
         String abra = "";
+        String szinKod = getSzinKod();
         for (int i = 0; i < eltolas; i++) {
             abra += " ";
         }
         for (int i = 0; i < hossz; i++) {
             if (stilus == Stilusok.SZIMPLA) {
-                abra += "_";
+                abra += szinKod + "_" + ANSI_RESET;
             } else if (stilus == Stilusok.DUPLA) {
-                abra += "=";
+                abra += szinKod + "=" + ANSI_RESET;
             } else if (stilus == Stilusok.PONT) {
-                abra += ".";
+                abra += szinKod + "." + ANSI_RESET;
             }
         }
         return abra;
-
     }
 }
